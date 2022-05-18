@@ -1,0 +1,48 @@
+apiVersion: v1
+data:
+  base-url: https://g.codefresh.io
+  runtime: |
+    apiVersion: codefresh.io/v1alpha1
+    kind: Runtime
+    metadata:
+      creationTimestamp: null
+      name: codefresh
+      namespace: codefresh
+    spec:
+      bootstrapSpecifier: github.com/codefresh-io/cli-v2/manifests/argo-cd
+      cluster: https://cf-aks-sg-shichao-rg-mi-388395-bdde66e7.hcp.australiaeast.azmk8s.io:443
+      components:
+      - isInternal: false
+        name: events
+        type: kustomize
+        url: github.com/codefresh-io/cli-v2/manifests/argo-events?ref=v0.0.351
+        wait: true
+      - isInternal: false
+        name: rollouts
+        type: kustomize
+        url: github.com/codefresh-io/cli-v2/manifests/argo-rollouts?ref=v0.0.351
+        wait: false
+      - isInternal: false
+        name: workflows
+        type: kustomize
+        url: github.com/codefresh-io/cli-v2/manifests/argo-workflows?ref=v0.0.351
+        wait: false
+      - isInternal: false
+        name: app-proxy
+        type: kustomize
+        url: github.com/codefresh-io/cli-v2/manifests/app-proxy?ref=v0.0.351
+        wait: false
+      defVersion: 1.0.1
+      ingressClassName: nginx
+      ingressController: k8s.io/ingress-nginx
+      ingressHost: http://20.213.64.236
+      repo: https://github.com/whoissqr/cf-test
+      version: 0.0.351
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/managed-by: codefresh
+    codefresh.io/entity: runtimeDef
+  name: codefresh-cm
+  namespace: codefresh
